@@ -57,10 +57,5 @@ header {
 }
 
 /* Footer'a genel bir düzenleme eklenebilir */
-footer {
-  background-color: #ff4081; /* Siyah arka plan */
-  color: #fff; /* Beyaz yazı */
-  padding: 20px;
-  text-align: center; /* Ortalanmış içerik */
-}
+
 </style>

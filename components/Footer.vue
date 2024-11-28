@@ -48,7 +48,7 @@
   
   <style scoped>
   .footer {
-    background-color: #111; /* Siyah arka plan */
+    background-color:#ff4081 ; /* Siyah arka plan */
     color: #fff; /* Beyaz metin */
     padding: 20px 0;
   }
