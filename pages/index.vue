@@ -4,8 +4,15 @@
       <p>Bu bir örnek sayfadır.</p>
 
  
+    <!-- Carousel Bileşeni -->
+    <Carousel  />
+
 </div>
 </template>
+
+<script setup>
+import Carousel from '~/components/Carousel.vue';
+</script>
 <style scoped>
 .page {
   text-align: center;
