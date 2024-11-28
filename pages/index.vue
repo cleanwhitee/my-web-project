@@ -7,11 +7,51 @@
     <!-- Carousel Bileşeni -->
     <Carousel  />
 
+    <!-- ScrollableRectangle bileşeni -->
+    <ScrollableRectangle :items="rectangleItems" />
+
 </div>
 </template>
 
 <script setup>
 import Carousel from '~/components/Carousel.vue';
+import ScrollableRectangle from '~/components/ScrollableRectangle.vue';
+
+const rectangleItems = [
+  {
+    imgSrc: "/images/maskara.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/fondöten.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/maskara.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/fondöten.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/maskara.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/fondöten.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/maskara.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/fondöten.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/maskara.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/fondöten.jpg",  // Resim yolu
+  }
+  // Diğer öğeleri buraya ekleyebilirsiniz...
+];
+
+
 </script>
 <style scoped>
 .page {
