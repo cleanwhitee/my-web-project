@@ -2,9 +2,9 @@
   <div class="page">
     <h1>Hoş Geldiniz!</h1>
     <p>Bu bir örnek sayfadır.</p>
-    
-    <!-- Sekmeler -->
-    <div class="tabs">
+ 
+     <!-- Sekmeler -->
+     <div class="tabs">
       <span
         @click="activeTab = 'populer'"
         :class="{ active: activeTab === 'populer' }"
@@ -50,15 +50,11 @@
 
     <!-- ProductSlider bileşeni -->
     <ProductSlider :items="sliderItems" />
-  
+ 
     <!-- Carousel Bileşeni -->
-    <Carousel />
+    <Carousel  />
 
-    <!-- Footer Bileşeni -->
-    <Footer />
-
-
-    
+    <Chatbox />
   </div>
 </template>
 
@@ -67,30 +63,67 @@ import { ref } from 'vue';
 import ScrollableRectangle from '~/components/ScrollableRectangle.vue';
 import ProductSlider from '~/components/ProductSlider.vue';
 import Carousel from '~/components/Carousel.vue';
-import Footer from '~/components/Footer.vue'; // Footer bileşeni import edildi
-
+import Chatbox from '~/components/Chatbox.vue';
 
 const rectangleItems = [
-  { imgSrc: "/images/maskara.jpg" },
-  { imgSrc: "/images/fondöten.jpg" },
-  { imgSrc: "/images/maskara.jpg" },
-  { imgSrc: "/images/fondöten.jpg" },
-  { imgSrc: "/images/maskara.jpg" },
-  { imgSrc: "/images/fondöten.jpg" },
-  { imgSrc: "/images/maskara.jpg" },
-  { imgSrc: "/images/fondöten.jpg" },
-  { imgSrc: "/images/maskara.jpg" },
-  { imgSrc: "/images/fondöten.jpg" },
+  {
+    imgSrc: "/images/maskara.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/fondöten.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/maskara.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/fondöten.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/maskara.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/fondöten.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/maskara.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/fondöten.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/maskara.jpg",  // Resim yolu
+  },
+  {
+    imgSrc: "/images/fondöten.jpg",  // Resim yolu
+  }
+  // Diğer öğeleri buraya ekleyebilirsiniz...
 ];
+
 
 const sliderItems = [
-  { imgSrc: "/images/slider1.png" },
-  { imgSrc: "/images/slider2.png" },
-  { imgSrc: "/images/slider3.png" },
-  { imgSrc: "/images/slider4.png" },
-  { imgSrc: "/images/slider5.png" },
+  {
+    imgSrc: "/images/slider1.png",  // Slider resim yolu
+  
+  },
+  {
+    imgSrc: "/images/slider2.png",  // Slider resim yolu
+
+  },
+  {
+    imgSrc: "/images/slider3.png",  // Slider resim yolu
+   
+  },
+  {
+    imgSrc: "/images/slider4.png",  // Slider resim yolu
+   
+  },
+  {
+    imgSrc: "/images/slider5.png",  // Slider resim yolu
+   
+  }
 ];
 
+// Sekme yönetimi
 const activeTab = ref('populer'); // Varsayılan olarak 'En Popüler' sekmesi aktif
 </script>
 
@@ -141,4 +174,5 @@ h1 {
 .tab-content h2 {
   font-size: 40px;
 }
+
 </style>
