@@ -65,8 +65,6 @@ import ScrollableRectangle from '~/components/ScrollableRectangle.vue';
 import ProductSlider from '~/components/ProductSlider.vue';
 import Carousel from '~/components/Carousel.vue';
 import Chatbox from '~/components/ChatBox.vue';
-import Footer from '~/components/Footer.vue';
-
 
 const rectangleItems = [
   {
