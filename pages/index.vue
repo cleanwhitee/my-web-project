@@ -63,7 +63,7 @@ import { ref } from 'vue';
 import ScrollableRectangle from '~/components/ScrollableRectangle.vue';
 import ProductSlider from '~/components/ProductSlider.vue';
 import Carousel from '~/components/Carousel.vue';
-import Chatbox from '~/components/Chatbox.vue';
+import Chatbox from '~/components/ChatBox.vue';
 
 const rectangleItems = [
   {
