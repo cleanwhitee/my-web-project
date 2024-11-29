@@ -19,9 +19,7 @@
             <li>
               <nuxt-link to="/katalog" @click="closeSidebar">Katalog</nuxt-link>
             </li>
-            <li>
-              <nuxt-link to="/cikis-yap" @click="closeSidebar">Çıkış Yap</nuxt-link>
-            </li>
+            
           </ul>
         </div>
       </div>

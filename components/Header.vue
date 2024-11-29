@@ -22,15 +22,12 @@
 
       <!-- İkonlar -->
       <div class="icons">
-        <!-- Favoriler -->
         <button>
           <i class="fas fa-heart"></i>
         </button>
-        <!-- Sepet -->
         <button @click="toggleCart">
           <i class="fas fa-shopping-bag"></i>
         </button>
-        <!-- Sidebar Açma Butonu -->
         <button @click="toggleSidebar">
           <i class="fas fa-bars"></i>
         </button>
@@ -39,17 +36,21 @@
 
     <div class="header-bottom">
       <ul>
-        <li><nuxt-link to="/category/makyaj">Makyaj</nuxt-link></li>
-        <li><nuxt-link to="/category/cilt-bakim">Cilt Bakım</nuxt-link></li>
-        <li><nuxt-link to="/category/sac-bakim">Saç Bakım</nuxt-link></li>
-        <li><nuxt-link to="/category/parfum">Parfüm & Deodorant</nuxt-link></li>
-        <li><nuxt-link to="/category/kisisel-bakim">Kişisel Bakım</nuxt-link></li>
-        <li><nuxt-link to="/category/erkek-bakim">Erkek Bakım</nuxt-link></li>
-        <li><nuxt-link to="/category/anne-bebek">Anne & Bebek</nuxt-link></li>
-        <li><nuxt-link to="/category/ev-yasam">Ev & Yaşam</nuxt-link></li>
-        <li><nuxt-link to="/category/kampanyalar">Kampanyalar</nuxt-link></li>
-        <li><nuxt-link to="/blog">Blog</nuxt-link></li>
-        <li><nuxt-link to="/category/markalar">Markalar</nuxt-link></li>
+        <!-- Dynamic Category Dropdowns -->
+        <li
+          class="nav-item dropdown"
+          v-for="category in categories"
+          :key="category.name"
+          @mouseover="showSubMenu(category.name)"
+          @mouseleave="hideSubMenu"
+        >
+          <span>{{ category.name }}</span>
+          <ul v-show="activeCategory === category.name" class="dropdown-menu">
+            <li v-for="subItem in category.subItems" :key="subItem.name">
+              <nuxt-link :to="subItem.link">{{ subItem.name }}</nuxt-link>
+            </li>
+          </ul>
+        </li>
       </ul>
     </div>
   </header>
@@ -66,38 +67,93 @@ import Menu from '@/components/Menu.vue';
 export default {
   components: {
     Sepet,
-    Menu
+    Menu,
   },
   data() {
     return {
-      searchQuery: '',
+      searchQuery: '', // Arama çubuğu için
+      activeCategory: null,
+      categories: [
+        {
+          name: "Makyaj",
+          subItems: [
+            { name: "Göz Makyajı", link: "/makyaj/goz-makyaji" },
+            { name: "Yüz Makyajı", link: "/makyaj/yuz-makyaji" },
+            { name: "Makyaj Aksesuarları", link: "/makyaj/makyaj-aksesuar" },
+          ],
+        },
+        {
+          name: "Cilt Bakım",
+          subItems: [{ name: "Nemlendirici", link: "/cilt-bakim/nemlendirici" }],
+        },
+        {
+          name: "Saç Bakım",
+          subItems: [{ name: "Şampuanlar", link: "/sac-bakim/sampuanlar" }],
+        },
+        {
+          name: "Parfüm & Deodorant",
+          subItems: [{ name: "Parfümler", link: "/parfum/parfumler" }],
+        },
+        {
+          name: "Kişisel Bakım",
+          subItems: [{ name: "Vücut Bakımı", link: "/kisisel-bakim/vucut-bakimi" }],
+        },
+        {
+          name: "Erkek Bakım",
+          subItems: [{ name: "Erkek Cilt Bakımı", link: "/erkek-bakim/cilt-bakimi" }],
+        },
+        {
+          name: "Anne & Bebek",
+          subItems: [{ name: "Bebek Ürünleri", link: "/anne-bebek/bebek-urunleri" }],
+        },
+        {
+          name: "Ev & Yaşam",
+          subItems: [{ name: "Ev Dekorasyonu", link: "/ev-yasam/ev-dekorasyonu" }],
+        },
+        {
+          name: "Kampanyalar",
+          subItems: [{ name: "İndirimler", link: "/kampanyalar/indirimler" }],
+        },
+        {
+          name: "Blog",
+          subItems: [{ name: "Güncel Yazılar", link: "/blog/guncel-yazilar" }],
+        },
+        {
+          name: "Markalar",
+          subItems: [{ name: "Tüm Markalar", link: "/markalar/tum-markalar" }],
+        },
+      ],
     };
   },
   methods: {
+    showSubMenu(categoryName) {
+      this.activeCategory = categoryName;
+    },
+    hideSubMenu() {
+      this.activeCategory = null;
+    },
     search() {
-      console.log('Searching for:', this.searchQuery);
-    },
-    toggleSidebar() {
-      this.$refs.sepet.toggleSidebar(); // Sepeti toggle etmek için
-    },
-    toggleSidebar() {
-      this.$refs.menu.toggleSidebar(); // Sepeti toggle etmek için
+      console.log('Arama sorgusu:', this.searchQuery); // Arama işlemi tetikleniyor
     },
     toggleCart() {
-      this.$refs.sepet.toggleSidebar(); // Sepet component'ini açıp kapatmak için
-    }
+      this.$refs.sepet.toggleSidebar(); // Sepet componentini aç/kapa
+    },
+    toggleSidebar() {
+      this.$refs.menu.toggleSidebar(); // Menü componentini aç/kapa
+    },
   },
 };
 </script>
 
 <style scoped>
-/* Header Stil Düzenlemeleri */
+/* Header Genel */
 .header {
   font-family: Arial, sans-serif;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
 
-/* Header Üst Kısım */
+/* Üst Menü */
 .header-top {
   display: flex;
   align-items: center;
@@ -108,7 +164,6 @@ export default {
 .logo img {
   width: 120px;
   height: auto;
-  margin-right: 20px;
 }
 
 .search-bar {
@@ -142,7 +197,7 @@ export default {
   cursor: pointer;
 }
 
-/* Alt Menü (Kategori Menüsü) */
+/* Alt Menü */
 .header-bottom {
   background-color: #f8f8f8;
   padding: 10px 20px;
@@ -156,6 +211,10 @@ export default {
   margin: 0;
 }
 
+.header-bottom li {
+  position: relative;
+}
+
 .header-bottom li a {
   text-decoration: none;
   color: #333;
@@ -165,5 +224,53 @@ export default {
 
 .header-bottom li a:hover {
   color: #ff4081;
+}
+
+/* Dropdown Menü */
+.nav-item.dropdown {
+  position: relative;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  min-width: 150px;
+  z-index: 10;
+}
+
+.dropdown-menu li {
+  padding: 5px 15px;
+}
+
+.dropdown-menu li a {
+  color: #333;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.dropdown-menu li a:hover {
+  color: #ff4081;
+}
+
+/* Alt Dropdown (Submenu) */
+.dropdown-submenu {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+}
+
+.nav-item.dropdown:hover .dropdown-submenu {
+  display: block;
 }
 </style>
