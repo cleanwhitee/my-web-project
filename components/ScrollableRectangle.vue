@@ -32,6 +32,7 @@ export default {
   display: flex;
   flex-wrap: nowrap;
   gap: 15px;
+  
 }
 
 .scrollable-item {
@@ -39,6 +40,7 @@ export default {
   border: 1px solid #ddd;
   padding: 10px;
   text-align: center;
+  border-radius: 15px;
 }
 
 .item-image {

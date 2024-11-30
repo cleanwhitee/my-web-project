@@ -21,14 +21,14 @@
   
   // Ürün verileri
   const items = ref([
-    { image: 'https://via.placeholder.com/120', title: 'Saç Bakım' },
-    { image: 'https://via.placeholder.com/120', title: 'Maskaralar' },
-    { image: 'https://via.placeholder.com/120', title: 'Deodorant' },
-    { image: 'https://via.placeholder.com/120', title: 'Fondöten & Kapatıcı' },
-    { image: 'https://via.placeholder.com/120', title: 'Rujlar' },
-    { image: 'https://via.placeholder.com/120', title: 'Göz Farı' },
-    { image: 'https://via.placeholder.com/120', title: 'Kremler' },
-    { image: 'https://via.placeholder.com/120', title: 'Parfümler' },
+    { image: "/images/hair.png", title: 'Saç Bakım' },
+    { image: "/images/maskara.png", title: 'Maskaralar' },
+    { image: "/images/deodorant.png", title: 'Deodorant' },
+    { image: "/images/makeup.png", title: 'Fondöten & Kapatıcı' },
+    { image: "/images/ruj.png", title: 'Rujlar' },
+    { image: "/images/far.png", title: 'Göz Farı' },
+    { image: "/images/krem.png", title: 'Kremler' },
+    { image: "/images/parfume.png", title: 'Parfümler' },
   ]);
   
   // Carousel referansı
