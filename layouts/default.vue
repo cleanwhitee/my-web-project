@@ -1,13 +1,16 @@
 <script>
 import Header from '~/components/Header.vue';  // Header bileşenini import ediyoruz
 import Menu from '@/components/Menu.vue';      // Menu bileşenini import ediyoruz
-import Footer from '@/components/Footer.vue';  // Footer bileşenini import ediyoruz
+import Footer from '@/components/Footer.vue';
+
+  // Footer bileşenini import ediyoruz
 
 export default {
   components: {
     Header,
     Menu,
-    Footer, // Footer bileşeni
+    Footer,
+     // Footer bileşeni
   },
 };
 </script>
