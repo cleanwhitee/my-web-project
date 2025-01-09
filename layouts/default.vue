@@ -50,7 +50,7 @@ header {
   position: sticky;
   top: 0; /* Ekranın üst kısmına sabitlenir */
   z-index: 1000; /* Header'ı diğer içeriklerin üstünde tutar */
-  background-color: white;
+  background-color: rgb(255, 255, 255);
 }
 
 /* Main Content alanının, sidebar ile uyumlu olması için */

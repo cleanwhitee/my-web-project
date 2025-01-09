@@ -81,6 +81,7 @@
     </div>
 
     <Footer />
+    <Snowfall />
   </div>
 </template>
 
@@ -90,6 +91,7 @@ import ScrollableRectangle from '~/components/ScrollableRectangle.vue';
 import ProductSlider from '~/components/ProductSlider.vue';
 import Carousel from '~/components/Carousel.vue';
 import Chatbox from '~/components/ChatBox.vue';
+import Snowfall from '~/components/Snowfall.vue';
 
 const activeTab = ref('populer');
 const rectangleItems = [
