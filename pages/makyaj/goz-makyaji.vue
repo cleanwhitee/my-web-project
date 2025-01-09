@@ -1,8 +1,5 @@
 <template>
   <div class="goz-makyaji">
-    
-    
-   
     <!-- Ürün Listesi -->
     <div class="product-list">
       <div v-for="(product, index) in products" :key="index" class="product">
@@ -22,24 +19,41 @@
 </template>
 
 <script>
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+
+// Firebase yapılandırma bilgileri (Firebase Console'dan al)
+const firebaseConfig = {
+  apiKey: "AIzaSyB4YFG3e1n81PmYHGcVE6cnjaM4Hfzcmvo",
+  authDomain: "my-web-project2025.firebaseapp.com",
+  projectId: "my-web-project2025",
+  storageBucket: "my-web-project2025.firebasestorage.app",
+  messagingSenderId: "351407598944",
+  appId: "1:351407598944:web:fec994457bc35dcb2a8205",
+  measurementId: "G-RENZF83JTP"
+};
+
+// Firebase'i başlat ve Firestore bağla
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 export default {
-  name: 'GozMakyaji',
+  name: "GozMakyaji",
   data() {
     return {
-      // Ürün bilgileri
-      products: [
-        { name: "TECHNIC Technic 15'li Far Paleti Unconditional", price: "779.00", image: "/images/image1.png" },
-        { name: "Maybelline Lash Sensational Extra Black Maskara", price: "699.50", image: "/images/image2.png" },
-        { name: "Loreal Paris Makeup Panorama Hacim Veren Maskara Siyah", price: "929.50", image: "/images/image3.png" },
-        { name: "SHOW BY PASTEL Show Your Peace Kaş Kirpik Maskarası", price: "224.50", image: "/images/image4.png" },
-        { name: "MAYBELLINE Colossal Kajal Extra Black Göz Kalemi", price: "114.50", image: "/images/image5.png" },
-        { name: "MAKE UP ACADEMY 5'li Far Paleti Desert Bloom", price: "439.00", image: "/images/image6.png" },
-        { name: "MAYBELLINE Far Nudes Of New York", price: "1,019.50", image: "/images/image7.png" },
-        { name: "FLORMAR Midnight Matte Eyeliner - Black", price: "499.50", image: "/images/image8.png" },
-        { name: "PASTEL Far Likit Glow No:221", price: "249.50", image: "/images/image9.png" },
-        { name: "MAYBELLINE Color Tattoo 24hr Krem Göz Farı", price: "499.50", image: "/images/image10.png" }
-      ],
+      products: [] // Firestore'dan çekilen ürünler burada tutulacak
     };
+  },
+  async mounted() {
+    try {
+      // Firestore'dan ürünleri çekme
+      const querySnapshot = await getDocs(collection(db, "products"));
+      querySnapshot.forEach((doc) => {
+        this.products.push({ id: doc.id, ...doc.data() });
+      });
+    } catch (error) {
+      console.error("Veriler çekilirken hata oluştu:", error);
+    }
   },
   methods: {
     addFavorite(product) {
@@ -129,7 +143,8 @@ export default {
   margin-top: 10px;
 }
 
-.favorite-btn, .cart-btn {
+.favorite-btn,
+.cart-btn {
   background-color: #e91e63;
   color: white;
   border: none;
@@ -139,7 +154,8 @@ export default {
   cursor: pointer;
 }
 
-.favorite-btn:hover, .cart-btn:hover {
+.favorite-btn:hover,
+.cart-btn:hover {
   background-color: #d81b60;
 }
 </style>
