@@ -1,12 +1,11 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'; // Firebase Authentication modülü
-//import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { defineNuxtPlugin } from '#app'
+import { initializeApp } from 'firebase/app'
+import { getAnalytics } from 'firebase/analytics'
+import { getAuth } from 'firebase/auth'
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+export default defineNuxtPlugin((_nuxtApp) => {
+  const config = useRuntimeConfig()
+
 const firebaseConfig = {
   apiKey: "AIzaSyB4YFG3e1n81PmYHGcVE6cnjaM4Hfzcmvo",
   authDomain: "my-web-project2025.firebaseapp.com",
@@ -22,4 +21,19 @@ const app = initializeApp(firebaseConfig);
 //const analytics = getAnalytics(app);
 const auth = getAuth(app);
 
-export { auth, createUserWithEmailAndPassword };
+// (İsteğe bağlı) Analytics servisi
+if (typeof window !== 'undefined') {
+  getAnalytics(app)
+}
+
+// Artık app ve auth nesnelerini return ediyoruz ki,
+// kullanmak istediğimiz yerde this.$firebaseApp veya this.$firebaseAuth diye erişebilelim
+return {
+  provide: {
+    firebaseApp: app,
+    firebaseAuth: auth
+  }
+}
+})
+
+//export { auth, createUserWithEmailAndPassword };
