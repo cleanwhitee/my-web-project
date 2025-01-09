@@ -3,30 +3,21 @@
     <!-- Ürün Listesi -->
     <div class="product-list">
       <div
-        v-for="(product, index) in products"
+        v-for="(product, index) in productStore.products"
         :key="index"
         class="product"
       >
-        <img
-          :src="product.image"
-          :alt="product.name"
-        />
+        <img :src="product.image" :alt="product.name" />
         <div class="product-info">
           <h3>{{ product.name }}</h3>
           <p class="price">{{ product.price }} ₺</p>
 
           <!-- Favori ve Sepet Butonları -->
           <div class="button-container">
-            <button
-              class="favorite-btn"
-              @click="addFavorite(product)"
-            >
+            <button class="favorite-btn" @click="addFavorite(product)">
               Favorilere Ekle
             </button>
-            <button
-              class="cart-btn"
-              @click="addToCart(product)"
-            >
+            <button class="cart-btn" @click="addToCart(product)">
               Sepete Ekle
             </button>
           </div>
@@ -36,76 +27,28 @@
   </div>
 </template>
 
-<script>
-// Bu örnekte initializeApp, getFirestore, getAuth hepsi bu sayfada
-import { initializeApp } from 'firebase/app'
-import { getFirestore, collection, getDocs, addDoc } from 'firebase/firestore'
-import { getAuth } from 'firebase/auth'
+<script setup lang="ts">
+import { useProductStore } from '~/stores/products'; // Pinia store'u import ediyoruz
+import { useCartStore } from '~/stores/cart'; // Sepet için store'u import ediyoruz
 
-// Firebase yapılandırma (değiştirmeden kullandım)
-const firebaseConfig = {
-  apiKey: "AIzaSyB4YFG3e1n81PmYHGcVE6cnjaM4Hfzcmvo",
-  authDomain: "my-web-project2025.firebaseapp.com",
-  projectId: "my-web-project2025",
-  storageBucket: "my-web-project2025.firebasestorage.app",
-  messagingSenderId: "351407598944",
-  appId: "1:351407598944:web:fec994457bc35dcb2a8205",
-  measurementId: "G-RENZF83JTP"
-}
+const productStore = useProductStore(); // Ürünleri yönetmek için store
+const cartStore = useCartStore(); // Sepet işlemleri için store
 
-// Tek bir defa app'i başlat, db ve auth referansı al
-const app = initializeApp(firebaseConfig)
-const db = getFirestore(app)
-const auth = getAuth(app)
+// Ürünleri bileşen yüklendiğinde alıyoruz
+onMounted(async () => {
+  await productStore.fetchProducts();
+});
 
-export default {
-  name: 'GozMakyaji',
-  data() {
-    return {
-      products: [] // Firestore'dan çekilen ürünler
-    }
-  },
-  async mounted() {
-    // Firestore'dan "products" koleksiyonunu çekiyoruz
-    try {
-      const querySnapshot = await getDocs(collection(db, "products"))
-      querySnapshot.forEach((docSnap) => {
-        this.products.push({ id: docSnap.id, ...docSnap.data() })
-      })
-    } catch (error) {
-      console.error("Veriler çekilirken hata oluştu:", error)
-    }
-  },
-  methods: {
-    addFavorite(product) {
-      alert(`${product.name} favorilere eklendi!`)
-      // Burada isterseniz "favorites" koleksiyonuna ekleyebilirsiniz.
-    },
-    async addToCart(product) {
-      // 1) Oturum açmış kullanıcı var mı?
-      const user = auth.currentUser
-      if (!user) {
-        alert('Lütfen giriş yapın!')
-        return
-      }
+// Favorilere ekleme işlemi
+const addFavorite = (product: { id: string; name: string; price: number; image: string }) => {
+  alert(`${product.name} favorilere eklendi!`);
+  // Burada "favorites" koleksiyonuna veri eklenebilir
+};
 
-      // 2) "users/{uid}/cart" alt koleksiyonuna ekle
-      try {
-        await addDoc(collection(db, 'users', user.uid, 'cart'), {
-          name: product.name,
-          price: product.price,
-          // Sepette "imageUrl" olarak kullanalım:
-          imageUrl: product.image,
-          quantity: 1
-        })
-        alert(`${product.name} sepete eklendi!`)
-      } catch (err) {
-        console.error("Sepete eklenirken hata:", err)
-        alert("Ürün sepete eklenemedi.")
-      }
-    }
-  }
-}
+// Sepete ekleme işlemi
+const addToCart = async (product: { id: string; name: string; price: number; image: string }) => {
+  await cartStore.addToCart(product);
+};
 </script>
 
 <style scoped>

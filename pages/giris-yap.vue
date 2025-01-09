@@ -1,7 +1,5 @@
 <template>
   <div>
-    <h1>Giriş Yap</h1>
-    <!-- Giriş yapma formu buraya gelecek -->
     <LoginForm />
   </div>
 </template>
@@ -15,9 +13,77 @@ export default {
 </script>
 
 <style scoped>
+/* Tüm sayfayı kaplayan kapsayıcı */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Dikey ve yatayda tam ortalama */
+  height: 100vh; /* Sayfanın tamamını kaplayacak yükseklik */
+  width: 100vw; /* Sayfanın tamamını kaplayacak genişlik */
+  background-color: #f9f9f9;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Başlık */
 h1 {
   font-size: 40px;
-  text-align: center; /* Yatayda ortalama */
-  margin-bottom: 20px; /* Başlık ile form arasında boşluk */
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Form kapsayıcısı */
+.login-form {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Alanlar arasındaki boşluk */
+}
+
+/* Giriş alanları */
+.login-form input {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+/* Buton */
+.login-button {
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(90deg, #007bff, #0056b3);
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px; /* Daha yuvarlak köşeler */
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+/* Hover efekti */
+.login-button:hover {
+  background-color: #004080;
+  transform: scale(1.05); /* Hafif büyüme efekti */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Hover sırasında gölge */
 }
 </style>
