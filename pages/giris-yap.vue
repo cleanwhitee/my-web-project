@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login-container">
     <LoginForm />
   </div>
 </template>
@@ -8,7 +8,7 @@
 import LoginForm from '~/components/LoginForm.vue';
 
 export default {
-  name: 'GirisYap'
+  name: 'GirisYap',
 };
 </script>
 
@@ -23,12 +23,12 @@ html, body {
 .login-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center; /* Dikey ve yatayda tam ortalama */
+  align-items: center; /* Yatayda ortalama */
+  justify-content: flex-start; /* Dikeyde üst hizalama */
   height: 100vh; /* Sayfanın tamamını kaplayacak yükseklik */
   width: 100vw; /* Sayfanın tamamını kaplayacak genişlik */
   background-color: #f9f9f9;
-  padding: 0 20px;
+  padding-top: 100px; /* Yukarıdan boşluk */
   box-sizing: border-box;
 }
 
