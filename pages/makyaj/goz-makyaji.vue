@@ -1,10 +1,7 @@
 <template>
   <div class="goz-makyaji">
-    
-    
-   
     <!-- Ürün Listesi -->
-    <div class="product-list">
+    <div class="product-list" v-if="products.length">
       <div v-for="(product, index) in products" :key="index" class="product">
         <img :src="product.image" :alt="product.name" />
         <div class="product-info">
@@ -12,48 +9,71 @@
           <p class="price">{{ product.price }} ₺</p>
           <!-- Favori ve Sepet Butonları -->
           <div class="button-container">
-            <button class="favorite-btn" @click="addFavorite(product)">Favorilere Ekle</button>
-            <button class="cart-btn" @click="addToCart(product)">Sepete Ekle</button>
+            <button class="favorite-btn" @click="addFavorite(product)">
+              Favorilere Ekle
+            </button>
+            <button class="cart-btn" @click="addToCart(product)">
+              Sepete Ekle
+            </button>
           </div>
         </div>
       </div>
+    </div>
+    <!-- Yükleniyor Mesajı -->
+    <div v-else>
+      <p>Ürünler yükleniyor...</p>
     </div>
   </div>
 </template>
 
 <script>
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+import { useNuxtApp } from "#app";
+
 export default {
-  name: 'GozMakyaji',
+  name: "GozMakyaji",
   data() {
     return {
-      // Ürün bilgileri
-      products: [
-        { name: "TECHNIC Technic 15'li Far Paleti Unconditional", price: "779.00", image: "/images/image1.png" },
-        { name: "Maybelline Lash Sensational Extra Black Maskara", price: "699.50", image: "/images/image2.png" },
-        { name: "Loreal Paris Makeup Panorama Hacim Veren Maskara Siyah", price: "929.50", image: "/images/image3.png" },
-        { name: "SHOW BY PASTEL Show Your Peace Kaş Kirpik Maskarası", price: "224.50", image: "/images/image4.png" },
-        { name: "MAYBELLINE Colossal Kajal Extra Black Göz Kalemi", price: "114.50", image: "/images/image5.png" },
-        { name: "MAKE UP ACADEMY 5'li Far Paleti Desert Bloom", price: "439.00", image: "/images/image6.png" },
-        { name: "MAYBELLINE Far Nudes Of New York", price: "1,019.50", image: "/images/image7.png" },
-        { name: "FLORMAR Midnight Matte Eyeliner - Black", price: "499.50", image: "/images/image8.png" },
-        { name: "PASTEL Far Likit Glow No:221", price: "249.50", image: "/images/image9.png" },
-        { name: "MAYBELLINE Color Tattoo 24hr Krem Göz Farı", price: "499.50", image: "/images/image10.png" }
-      ],
+      products: [] // Ürünler burada saklanacak
     };
   },
   methods: {
+    // Firestore'dan ürünleri çekme
+    async fetchProducts() {
+      try {
+        const { $firebaseDB } = useNuxtApp(); // Firestore bağlantısını al
+        const db = $firebaseDB;
+        const productsCollection = collection(db, "products"); // 'products' koleksiyonuna bağlan
+        const querySnapshot = await getDocs(productsCollection);
+
+        // Verileri products dizisine ekle
+        this.products = querySnapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id // Her ürünün ID'sini de ekliyoruz
+        }));
+
+        console.log("Firestore'dan alınan ürünler:", this.products); // Kontrol için log
+      } catch (error) {
+        console.error("Firebase'den veri çekilirken bir hata oluştu:", error); // Hata varsa logla
+      }
+    },
+    // Favorilere ürün ekleme
     addFavorite(product) {
       alert(`${product.name} favorilere eklendi!`);
     },
+    // Sepete ürün ekleme
     addToCart(product) {
       alert(`${product.name} sepete eklendi!`);
     }
+  },
+  mounted() {
+    this.fetchProducts(); // Bileşen yüklendiğinde ürünleri al
   }
 };
 </script>
 
 <style scoped>
-/* Basit stil */
+/* Genel stil */
 .goz-makyaji {
   font-family: Arial, sans-serif;
   padding: 20px;
@@ -62,28 +82,6 @@ export default {
   align-items: center;
 }
 
-.goz-makyaji h1 {
-  font-size: 2rem;
-  color: #333;
-}
-
-.goz-makyaji p {
-  font-size: 1.1rem;
-  color: #777;
-}
-
-.goz-makyaji ul {
-  list-style-type: none;
-  padding: 0;
-  text-align: center;
-}
-
-.goz-makyaji ul li {
-  font-size: 1.2rem;
-  color: #555;
-}
-
-/* Ürün Listesi */
 .product-list {
   display: flex;
   flex-wrap: wrap;
@@ -124,12 +122,8 @@ export default {
   margin-top: 10px;
 }
 
-/* Butonlar için stil */
-.button-container {
-  margin-top: 10px;
-}
-
-.favorite-btn, .cart-btn {
+.favorite-btn,
+.cart-btn {
   background-color: #e91e63;
   color: white;
   border: none;
@@ -139,7 +133,8 @@ export default {
   cursor: pointer;
 }
 
-.favorite-btn:hover, .cart-btn:hover {
+.favorite-btn:hover,
+.cart-btn:hover {
   background-color: #d81b60;
 }
 </style>
